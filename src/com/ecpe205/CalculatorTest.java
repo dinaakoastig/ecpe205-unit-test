@@ -71,4 +71,41 @@ class CalculatorTest {
                 Arguments.of(new int[]{7,2,8,3,4})
         );
     }
+    @ParameterizedTest
+    @MethodSource("useBaseXPowerY")
+    void shouldSolveExponent(double a, double b) {//testing for exponent() method
+        assertEquals(Math.pow(a,b), calc.expo(a, b));
+    }
+
+    static Stream<Arguments> useBaseXPowerY () {
+        return Stream.of(
+                Arguments.of(5,9),
+                Arguments.of(3,1),
+                Arguments.of(9,4),
+                Arguments.of(7,7),
+                Arguments.of(5,6)
+        );
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {7,3,4,6,9})
+    void shouldSolveFactorial(int n) {//testing for factorial() method
+        assertEquals(24, calc.factorial(n));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"jennie","chaeyoung", "lisa", "jisoo", "blackpink" })
+    void shouldKnowIfStringIsPalindrome(String n) {//testing for isPalindrome() method
+        assertEquals(true, calc.isPalindrome(n));
+    }
+
+    @Test
+    @MethodSource ("unsortedArrays")
+    public void sortingArrayOrdersByAscendingValue(int[] unsortedArray) {
+        int[] sortedArray = new bubbleSort().sort(unsortedArray);
+        for (int i = 0; i < sortedArray.length - 1; i++) {
+            assertThat(sortedArray[i], is(lessThanOrEqualTo(sortedArray[i + 1])));
+        }
+        assertThat(Arrays.asList(sortedArray), containsInAnyOrder(unsortedArray));
+    }
 }
